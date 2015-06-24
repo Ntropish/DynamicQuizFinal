@@ -4,5 +4,11 @@
 
 function Quiz(questions, quizName, mainDisplay, sideBarDisplay) {
     this.name = quizName;
-    this.
+    var mainDisp = mainDisplay;
+    var sideDisp = sideBarDisplay;
+    var questions = questions;
+    var score = 0;
+    var finalized = false;
+    var currentQuestion = 0;
+
 }

@@ -40,6 +40,8 @@ private
 privileged
 *****************
 
+.start()
+    Tells the quiz to start displaying
 .getScore()                 r int
 
 .getFinalized()             r bool
