@@ -62,6 +62,15 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
 
 }
 
+function Question(questionText, choices, correctAnswer) {
+    'use strict';
+    this.userAnswer = undefined;
+
+    this.isCorrect = function() {
+        return (this.userAnswer === correctAnswer);
+    };
+}
+
 Handlebars.registerHelper('display-index', function(nums, current, options) {
     'use strict';
     var out = "<h4>Questions</h4><div id='quiz-index-links' class='btn-group btn-group-vertical text-center'>";
@@ -76,7 +85,8 @@ Handlebars.registerHelper('display-index', function(nums, current, options) {
 $(document).ready( function() {
     'use strict';
     var quiz1 = new Quiz(   [{questionText: "age",choices: ["22","23"],correctAnswer: 0},
-                            {questionText: "color",choices: ["red","blue"],correctAnswer: 0},],
+                            {questionText: "color",choices: ["red","blue"],correctAnswer: 0},
+                            {questionText: "animal",choices: ["dog","cat"],correctAnswer: 0}],
                             'ageQuiz',
                             $('#sidebar-template').html(),
                             $('question-template').html(),
