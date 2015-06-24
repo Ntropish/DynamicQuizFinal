@@ -5,6 +5,12 @@
 /*global $:false */
 
 function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp) {
+    /*
+    Quiz objects do most of the work in this Dynamic quiz app. They are given display
+    areas which they use to display their quiz and accept user input. The user
+    uses the quiz with these inputs provided by the quiz. The quiz hides sensitive
+    data from the user so they can't cheat.
+     */
     'use strict';
     this.name = quizName;
     var score = 0;
@@ -63,12 +69,50 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
 }
 
 function Question(questionText, choices, correctAnswer) {
+    /*
+    The Question constructor mostly basic question data but it also holds
+    the user's answer to the question and has a method to check if the
+    user answered correctly.
+     */
     'use strict';
     this.userAnswer = undefined;
 
     this.isCorrect = function() {
         return (this.userAnswer === correctAnswer);
     };
+}
+
+function User() {
+    'use strict';
+    /*
+    Not happy about having to do client side user data storage, but since it was asked...
+
+    User represents an identity that has low security by using a PIN to authenticate
+    before many methods are usable. Also stores a list of quiz objects that hide data
+    from the user so they have to take them legitimately.
+     */
+    var username;
+    var PIN;
+    var authenticated = true;
+    this.quizzes = [];
+
+    function setName(name) {
+        username = name;
+    }
+
+    function setPin(n) {
+        PIN = n;
+    }
+
+    function getName() {
+        return username;
+    }
+
+    function authenticate(n) {
+        if (n === PIN) {
+            authenticated = true;
+        }
+    }
 }
 
 Handlebars.registerHelper('display-index', function(nums, current, options) {
