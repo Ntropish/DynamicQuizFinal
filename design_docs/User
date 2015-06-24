@@ -1,0 +1,35 @@
+User(Name, PIN)
+
+The User gives the app capabilities to store identities. PIN is used for
+authentication rather than password to indicate my security isn't very great.
+
+*****************
+public
+*****************
+
+None
+
+*****************
+private
+*****************
+
+.PIN                    int
+
+.name                   string
+
+.authenticated          bool
+
+*****************
+privileged
+*****************
+
+.getName()              r string
+
+.authenticate(int)      t bool
+    Return true if pin is correct and B
+.logout()
+    Set .authenticated to false
+.changeName()
+    Changes name only if authenticated
+.changePin()
+    Changes PIN only if authenticated
