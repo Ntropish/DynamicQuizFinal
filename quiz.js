@@ -35,10 +35,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
             context.nums.push({num: i + 1});
         }
         sideDisp.append(sideTemplate( context ));
-        //sideDisp.find('[data-num="'+currentQuestion+'"]').text("Hey");
         var buttons = $('.quiz-index-link');
-        //console.log(buttons.get(currentQuestion));
-        //buttons.get(currentQuestion).prop('checked',true);
         for (i = 0, l = questions.length; i < l; i++) {
             buttons.get(i).addEventListener('click', function() {
                 var clickedNum = this.getAttribute('data-num');
@@ -68,10 +65,8 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
 Handlebars.registerHelper('display-index', function(nums, current, options) {
     'use strict';
     var out = "<h4>Questions</h4><div id='quiz-index-links' class='btn-group btn-group-vertical text-center'>";
-    console.log(current);
     nums.forEach(function(num) {
         var check = ( current === num.num-1 )? 'active':'';
-        if (check) console.log("Check: "+check);
         out = out + "<button type='radio' class='btn quiz-index-link "+check+"' data-num='"+ (num.num-1)+"'>" + num.num + "</button>";
     });
 
