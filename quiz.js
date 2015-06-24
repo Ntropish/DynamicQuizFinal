@@ -19,19 +19,19 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     var sideTemplate = Handlebars.compile(sideTempElt);
 
     function nextQuestion() {
-
+        //todo
     }
 
     function prevQuestion() {
-
+        //todo
     }
 
     function submit() {
-
+        //todo
     }
 
     function isFilledOut() {
-
+        //todo
     }
 
     function display() {
@@ -59,11 +59,11 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     };
 
     this.getScore = function() {
-
+        //todo
     };
 
     this.getFinalized = function() {
-
+        //todo
     };
 
 }
@@ -140,6 +140,7 @@ $(document).ready( function() {
                             $('#question-display')
     );
         quiz1.beginQuiz();
+
     });
 
 });
