@@ -6,7 +6,6 @@ function Quiz(questions, quizName, mainDisplay, sideBarDisplay) {
     this.name = quizName;
     var mainDisp = mainDisplay;
     var sideDisp = sideBarDisplay;
-    var questions = questions;
     var score = 0;
     var finalized = false;
     var currentQuestion = 0;
