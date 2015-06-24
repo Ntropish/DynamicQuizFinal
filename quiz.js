@@ -128,17 +128,18 @@ Handlebars.registerHelper('display-index', function(nums, current, options) {
 
 $(document).ready( function() {
     'use strict';
-    $('#templates').load('templates.html');
+    $('#templates').load('templates.html', function() {
+
     var quiz1 = new Quiz(   [{questionText: "age",choices: ["22","23"],correctAnswer: 0},
                             {questionText: "color",choices: ["red","blue"],correctAnswer: 0},
                             {questionText: "animal",choices: ["dog","cat"],correctAnswer: 0}],
                             'ageQuiz',
                             $('#sidebar-template').html(),
-                            $('question-template').html(),
+                            $('#question-template').html(),
                             $('#question-sidebar'),
                             $('#question-display')
     );
-
-    quiz1.beginQuiz();
+        quiz1.beginQuiz();
+    });
 
 });
