@@ -11,13 +11,13 @@ public
 
 .quizName                   string
 
-.finalized                  bool
-
-.score                      int
-
 *****************
 private
 *****************
+
+.score                      int
+
+.finalized                  bool
 
 .mainDisp                   jquery object
 
@@ -33,5 +33,13 @@ private
 
 .submit()
     Finalizes and grades quiz. Clears and removes access to DOM elements
-.isFilledOut()              bool
+.isFilledOut()              r bool
     Returns true if all questions are answered
+
+*****************
+privileged
+*****************
+
+.getScore()                 r int
+
+.getFinalized()             r bool
