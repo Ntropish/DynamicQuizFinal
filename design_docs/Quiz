@@ -19,9 +19,10 @@ private
 
 .finalized                  bool
 
-.content                    jquery object
-    Quiz will take the html and add question/interface with handlebars
-    Must be a jquery object so that the other html can remain live
+.sidebarTemplate            jquery object
+
+.questionDisplayTemplate    jquery object
+
 .questions                  array of questions
 
 .currentQuestion            int
