@@ -1,0 +1,33 @@
+Quiz(questions, quizName, mainDisplay, sideBarDisplay)
+
+
+The Quiz will manipulate the DOM and accept input analogous to the user's DOM input
+It will have access to its display areas and use them to create its own interface for
+the user to interact with.
+
+*****************
+public
+*****************
+
+.quizName                   string
+
+.finalized                  bool
+
+.score                      int
+
+*****************
+private
+*****************
+
+.questions                  array of questions
+
+.currentQuestion            int
+
+.nextQuestion()
+
+.prevQuestion()
+
+.submit()
+    Finalizes and grades quiz. Clears and removes access to DOM elements
+.isFilledOut()              bool
+    Returns true if all questions are answered
