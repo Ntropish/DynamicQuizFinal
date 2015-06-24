@@ -11,4 +11,31 @@ function Quiz(questions, quizName, mainDisplay, sideBarDisplay) {
     var finalized = false;
     var currentQuestion = 0;
 
+    function nextQuestion() {
+
+    }
+
+    function prevQuestion() {
+
+    }
+
+    function submit() {
+
+    }
+
+    function isFilledOut() {
+
+    }
+
+    function start() {
+
+    }
+
+    function getScore() {
+
+    }
+
+    function getFinalized() {
+
+    }
 }
