@@ -1,0 +1,25 @@
+Question(questionText, choices, correctAnswer)
+
+Question holds question info and user's answer without. They are privately
+owned by quiz objects so they won't be visible to the user objects. Because
+of this, information hiding will be nearly non-existent.
+
+*****************
+public
+*****************
+
+.questionText                   string
+
+.choices                        array of strings
+
+.correctAnswer                  int
+
+.userAnswer                     int
+    Starts at Undefined
+
+*****************
+privileged
+*****************
+
+.isCorrect()                    r bool
+    Checks if userAnswer is the same as correctAnswer
