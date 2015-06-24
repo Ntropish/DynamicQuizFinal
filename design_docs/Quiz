@@ -40,7 +40,7 @@ private
 privileged
 *****************
 
-.start()
+.beginQuiz()
     Tells the quiz to start displaying
 .getScore()                 r int
 
