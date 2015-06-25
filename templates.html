@@ -4,7 +4,6 @@
 
 <script id="question-template" type="text/x-handlebars-template">
     {{questionText}}
-    <ul style='list-style-type:none'>
-        {{choices}}
-    </ul>
+
+    {{#display-choices choices}}{{/display-choices}}
 </script>

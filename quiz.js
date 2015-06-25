@@ -17,6 +17,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     var finalized = false;
     var currentQuestion = 0;
     var sideTemplate = Handlebars.compile(sideTempElt);
+    var mainTemplate = Handlebars.compile(mainTempElt);
 
     function nextQuestion() {
         //checks if operation is valid and displays next question if so
@@ -78,12 +79,21 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     }
 
     function display() {
+
+        //This could be more efficient, only called on new quiz
         sideDisp.empty();
+        //This needs to change almost every call to display though
+        mainDisp.empty();
+
+        //prepare the context for the index
         var context = {nums: [], current: currentQuestion};
         for (var i = 0, l = questions.length; i < l; i++) {
             context.nums.push({num: i + 1});
         }
+        //add index to the sidebar
         sideDisp.append(sideTemplate( context ));
+
+        //add handlers to the index
         var buttons = $('.quiz-index-link');
         for (i = 0, l = questions.length; i < l; i++) {
             buttons.get(i).addEventListener('click', function() {
@@ -95,6 +105,11 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
             }, true); //capture mode by setting true so div with handler is captured rather than any sub elements
         }
 
+        //prepare the context for question display
+        var questionContext = {question: questions[currentQuestion].questionText, choices: questions[currentQuestion].choices};
+
+        //add question to the question display
+        mainDisp.append(mainTemplate(questionContext));
     }
 
     this.beginQuiz = function() {
@@ -174,6 +189,13 @@ Handlebars.registerHelper('display-index', function(nums, current, options) {
     });
 
     return out + "</div>";
+});
+
+Handlebars.registerHelper('display-choices', function(choices, options) {
+    'use strict';
+    var out = "Hey";
+    out += " man";
+    return out;
 });
 
 $(document).ready( function() {
