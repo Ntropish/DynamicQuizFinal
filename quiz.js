@@ -18,6 +18,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     var currentQuestion = 0;
     var sideTemplate = Handlebars.compile(sideTempElt);
     var mainTemplate = Handlebars.compile(mainTempElt);
+    var finalTemplate = Handlebars.compile($('#finish-template').html());
 
     function nextQuestion() {
         //checks if operation is valid and displays next question if so
@@ -63,8 +64,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
             //clear display objects and forget
             sideDisp.empty();
             mainDisp.empty();
-            sideDisp = undefined;
-            mainDisp = undefined;
+            mainDisp.append(finalTemplate( {message: "You got "+score+(score===1?' right!':' right!')} ));
 
         }
     }
@@ -175,7 +175,7 @@ function Question(questionText, choices, correctAnswer) {
 
 }
 
-function User() {
+function User(name, pin) {
     'use strict';
     /*
     Not happy about having to do client side user data storage, but since it was asked...
@@ -184,34 +184,10 @@ function User() {
     before many methods are usable. Also stores a list of quiz objects that hide data
     from the user so they have to take them legitimately.
      */
-    var username;
-    var PIN;
-    var authenticated = true;
+    this.username = name;
+    this.PIN = pin;
     this.quizzes = [];
 
-    function setName(name) {
-        if (authenticated) {
-            username = name;
-        }
-    }
-
-    function setPin(n) {
-        if (authenticated) {
-            PIN = n;
-        }
-    }
-
-    function getName() {
-        return username;
-    }
-
-    function authenticate(n) {
-        if (n === PIN) {
-            authenticated = true;
-            return true;
-        }
-        return false;
-    }
 }
 
 function findUserInUserList(name, userList) {
@@ -224,17 +200,24 @@ function findUserInUserList(name, userList) {
     });
 }
 
-function getUser(username, pin) {
+function isValidUserList(userList){
     'use strict';
 
-    //try to get userList
-    var userList = localStorage.getItem('userList');
+    return !(!userList || //Not valid if falsey
+    userList.constructor !== Array || //Not valid if not an array
+    (userList.length > 0 && !(userList[0] instanceof User)));//Not valid if first element isn't a user
 
+}
+
+function getUser(username, pin) {
+    'use strict';
+    console.log(localStorage.getItem('userList'));
+    //try to get userList
+    var userList = JSON.parse(localStorage.getItem('userList'));
     //There are no users if it doesn't exist, so we can return now
-    if (!userList) {
+    if (! isValidUserList(userList)) {
         return false;
     }
-
     //otherwise look for it and return it if the pin is right
     var user = findUserInUserList(username, userList);
     if (user && user.authenticate(pin)) {
@@ -246,19 +229,22 @@ function getUser(username, pin) {
 function addUser(username, pin) {
     'use strict';
 
-    //Get the userList from local storage and make it if it doesn't exist
-    var userList = localStorage.getItem('userList');
-    if (! userList) {
+    //Get the userList from local storage and make it if it doesn't exist/not valid
+    var userList = [];
+    try{
+        userList = JSON.parse(localStorage.getItem('userList'));
+    } catch (e) {
+        console.log(e.message);
+    }
+    if (! isValidUserList(userList)) {
         userList = [];
     }
-    //if the user can't be found it is okay to make it
-    if (! findUserInUserList()) {
-        var newUser = new User();
-        newUser.setName(username);
-        newUser.setPin(pin);
+    //if the user can't be found it is okay to make the user
+    if (! findUserInUserList(username, userList)) {
+        var newUser = new User(username, pin);
         userList.push(newUser);
     }
-    localStorage.setItem('userList', userList);
+    localStorage.setItem('userList', JSON.stringify(userList));
 
 }
 
@@ -303,18 +289,20 @@ Handlebars.registerHelper('nav-buttons', function(prevText, nextText, prevIsEnab
 $(document).ready( function() {
     'use strict';
     $('#templates').load('templates.html', function() {
+        //addUser('justin', 2345);
+        //var user = getUser("justin", 2345);
+        //console.log(user);
 
-
-    var questions = [   new Question("What is your age?", ["22","23"], 0),
-                        new Question("What is your favorite color?", ["Red","Blue"], 0),
-                        new Question("What is your favorite animal?", ["Dog","Cat"], 0)];
-    var quiz1 = new Quiz(   questions,
-                            'ageQuiz',
-                            $('#sidebar-template').html(),
-                            $('#question-template').html(),
-                            $('#question-sidebar'),
-                            $('#question-display')
-    );
+        var questions = [   new Question("What is your age?", ["22","23"], 0),
+                            new Question("What is your favorite color?", ["Red","Blue"], 0),
+                            new Question("What is your favorite animal?", ["Dog","Cat"], 0)];
+        var quiz1 = new Quiz(   questions,
+                                'ageQuiz',
+                                $('#sidebar-template').html(),
+                                $('#question-template').html(),
+                                $('#question-sidebar'),
+                                $('#question-display')
+        );
         quiz1.beginQuiz();
 
     });
