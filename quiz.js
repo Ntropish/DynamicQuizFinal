@@ -196,9 +196,9 @@ Handlebars.registerHelper('display-choices', function(choices, savedSelection, o
     var out = "<div id='choices' class='btn-group btn-group-vertical text-center'>";
     for (var i = 0, l = choices.length; i < l; i++) {
         var isActive = (i === savedSelection)?' active':'';//This will make the button 'active' if it's the saved choice
-        out = out + "<button type='radio' class='btn'"+isActive+" data-choice-num='"+ i +"'>" + choices[i] + "</button>";
+        out = out + "<button type='radio' class='btn choice'"+isActive+" data-choice-num='"+ i +"'>" + choices[i] + "</button>";
     }
-    return out;
+    return out + "</div>";
 });
 
 $(document).ready( function() {

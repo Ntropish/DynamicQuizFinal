@@ -47,3 +47,9 @@
 #questionText {
     font-size: 33px;
 }
+#choices {
+    width: 100px;
+}
+.choice {
+    width: 100%;
+}
