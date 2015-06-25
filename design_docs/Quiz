@@ -33,7 +33,7 @@ private
 
 .submit()
     Finalizes and grades quiz. Clears and removes access to DOM elements
-.isFilledOut()              r bool
+.questionStates()           r [bool]
     Returns true if all questions are answered
 
 *****************

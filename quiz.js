@@ -22,11 +22,11 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         //checks if operation is valid and displays next question if so
         //return if next question was displayed, else false
         if (currentQuestion < questions.length - 1) {
-            display(currentQuestion++);
+            display(++currentQuestion);
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     function prevQuestion() {
@@ -35,16 +35,40 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         if (currentQuestion > 0) {
             display(--currentQuestion);
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     function submit() {
-        //todo
+        //checks if quiz is filled out, finalizes, grades quiz, forgets DOM elements it uses
+
+        //Ensure the quiz is completely filled out
+        //use .some() here instead of .every() so we stop checking after the first
+        //unanswered question is found.
+        //NOOB QUESTION: Can this be shortened somehow because the function is so simple?
+        if ( !questionStates().some(function(answered) {return !answered;}) ) {
+
+            //finalize quiz
+            finalized = true;
+
+            //grade quiz
+            questions.forEach( function(question) {
+                if (question.isCorrect()) {
+                    score++;
+                }
+            });
+
+            //clear display objects and forget
+            sideDisp.empty();
+            mainDisp.empty();
+            sideDisp = undefined;
+            mainDisp = undefined;
+
+        }
     }
 
-    function isFilledOut() {
+    function questionStates() {
         //todo
     }
 
