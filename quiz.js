@@ -106,7 +106,10 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         }
 
         //prepare the context for question display
-        var questionContext = {questionText: questions[currentQuestion].questionText, choices: questions[currentQuestion].choices};
+        var questionContext = { questionText: questions[currentQuestion].questionText,
+                                choices: questions[currentQuestion].choices,
+                                userAnswer: questions[currentQuestion].userAnswer
+        };
         console.log(questionContext);
         //add question to the question display
         mainDisp.append(mainTemplate(questionContext));
@@ -133,17 +136,14 @@ function Question(questionText, choices, correctAnswer) {
     user answered correctly.
      */
     'use strict';
-    this.userAnswer = undefined;
+    this.userAnswer = -1;
 
     this.isCorrect = function() {
         return (this.userAnswer === correctAnswer);
     };
 
     this.isAnswered = function() {
-        if (this.userAnswer) {
-            return true;
-        }
-        return false
+        return this.userAnswer !== -1;
     };
 }
 
@@ -184,17 +184,20 @@ Handlebars.registerHelper('display-index', function(nums, current, options) {
     'use strict';
     var out = "<h4>Questions</h4><div id='quiz-index-links' class='btn-group btn-group-vertical text-center'>";
     nums.forEach(function(num) {
-        var check = ( current === num.num-1 )? 'active':'';
+        var check = ( current === num.num-1 )? 'active':'';//This will make the button 'active' if it's the current question
         out = out + "<button type='radio' class='btn quiz-index-link "+check+"' data-num='"+ (num.num-1)+"'>" + num.num + "</button>";
     });
 
     return out + "</div>";
 });
 
-Handlebars.registerHelper('display-choices', function(choices, options) {
+Handlebars.registerHelper('display-choices', function(choices, savedSelection, options) {
     'use strict';
-    var out = "Hey";
-    out += " man";
+    var out = "<div id='choices' class='btn-group btn-group-vertical text-center'>";
+    for (var i = 0, l = choices.length; i < l; i++) {
+        var isActive = (i === savedSelection)?' active':'';//This will make the button 'active' if it's the saved choice
+        out = out + "<button type='radio' class='btn'"+isActive+" data-choice-num='"+ i +"'>" + choices[i] + "</button>";
+    }
     return out;
 });
 
