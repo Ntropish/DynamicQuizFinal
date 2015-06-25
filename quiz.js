@@ -86,16 +86,17 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         mainDisp.empty();
 
         //prepare the context for the index
-        var context = {nums: [], current: currentQuestion};
+        var context = {num: questions.length, current: currentQuestion, answered: questionStates()};
+        /*
         for (var i = 0, l = questions.length; i < l; i++) {
             context.nums.push({num: i + 1});
-        }
+        }*/
         //add index to the sidebar
         sideDisp.append(sideTemplate( context ));
 
         //add handlers to the index
         var buttons = $('.quiz-index-link');
-        for (i = 0, l = questions.length; i < l; i++) {
+        for (var i = 0, l = questions.length; i < l; i++) {
             buttons.get(i).addEventListener('click', function() {
                 var clickedNum = this.getAttribute('data-num');
                 if ( currentQuestion!==clickedNum ) {
@@ -207,14 +208,22 @@ function User() {
     }
 }
 
-Handlebars.registerHelper('display-index', function(nums, current, options) {
+Handlebars.registerHelper('display-index', function(num, current, answered, options) {
     'use strict';
     var out = "<h4>Questions</h4><div id='quiz-index-links' class='btn-group btn-group-vertical text-center'>";
+    for (var i = 0; i < num; i++) {
+        var isCurrentClass = ( current === i )? 'active':'';
+        var isCompleteClass = ( answered[i]? ' btn-success':'' );
+        out = out + "<button type='radio' class='btn quiz-index-link "+isCurrentClass+isCompleteClass+"' data-num='"+ i +"'>" + (+i+1) + "</button>";
+    }
+    /*
     nums.forEach(function(num) {
-        var check = ( current === num.num-1 )? 'active':'';//This will make the button 'active' if it's the current question
-        out = out + "<button type='radio' class='btn quiz-index-link "+check+"' data-num='"+ (num.num-1)+"'>" + num.num + "</button>";
-    });
+        var isCurrentClass = ( current === num.num-1 )? 'active':'';
+        var isCompleteClass = (answered)
+        out = out + "<button type='radio' class='btn quiz-index-link "+isCurrentClass+"' data-num='"+ (num.num-1)+"'>" + num.num + "</button>";
 
+    });
+*/
     return out + "</div>";
 });
 
@@ -240,6 +249,8 @@ Handlebars.registerHelper('nav-buttons', function(prevText, nextText, prevIsEnab
 $(document).ready( function() {
     'use strict';
     $('#templates').load('templates.html', function() {
+
+
     var questions = [   new Question("What is your age?", ["22","23"], 0),
                         new Question("What is your favorite color?", ["Red","Blue"], 0),
                         new Question("What is your favorite animal?", ["Dog","Cat"], 0)];
