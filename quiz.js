@@ -114,7 +114,6 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
                                 prevEnabled: currentQuestion > 0,
                                 nextEnabled: true
         };
-        console.log(questionContext);
         //add question to the question display
         mainDisp.append(mainTemplate(questionContext));
 
@@ -128,6 +127,15 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
                 }
             }, true);
 
+        });
+        $('#next-button').on('click', function() {
+            if (currentQuestion = questions.length - 1) {
+                submit();
+            }
+            nextQuestion();
+        });
+        $('#prev-button').on('click', function() {
+            prevQuestion();
         });
     }
 
