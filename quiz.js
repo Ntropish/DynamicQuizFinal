@@ -160,6 +160,8 @@ function Question(questionText, choices, correctAnswer) {
     user answered correctly.
      */
     'use strict';
+    this.questionText = questionText;
+    this.choices = choices;
     this.userAnswer = -1;
 
     this.isCorrect = function() {
@@ -169,6 +171,7 @@ function Question(questionText, choices, correctAnswer) {
     this.isAnswered = function() {
         return this.userAnswer !== -1;
     };
+
 }
 
 function User() {
