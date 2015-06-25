@@ -118,6 +118,13 @@ function Question(questionText, choices, correctAnswer) {
     this.isCorrect = function() {
         return (this.userAnswer === correctAnswer);
     };
+
+    this.isAnswered = function() {
+        if (this.userAnswer) {
+            return true;
+        }
+        return false
+    };
 }
 
 function User() {
