@@ -19,11 +19,25 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     var sideTemplate = Handlebars.compile(sideTempElt);
 
     function nextQuestion() {
-        //todo
+        //checks if operation is valid and displays next question if so
+        //return if next question was displayed, else false
+        if (currentQuestion < questions.length - 1) {
+            display(currentQuestion++);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function prevQuestion() {
-        //todo
+        //checks if operation is valid and displays previous question if so
+        //return if previous question was displayed, else false
+        if (currentQuestion > 0) {
+            display(--currentQuestion);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function submit() {
