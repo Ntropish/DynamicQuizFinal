@@ -3,7 +3,11 @@
 </script>
 
 <script id="question-template" type="text/x-handlebars-template">
-    <div id="questionText">{{questionText}}</div><br>
-
+    <div id="questionText" class="row">{{questionText}}</div><br>
+    <div id="question-choices" class="row center-block">
     {{#display-choices choices userAnswer}}{{/display-choices}}
+    </div>
+    <div id="navigation-buttons" class="row btn-group">
+        {{#nav-buttons prevText nextText prevEnabled nextEnabled}}{{/nav-buttons}}
+    </div>
 </script>

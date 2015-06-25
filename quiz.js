@@ -108,7 +108,11 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         //prepare the context for question display
         var questionContext = { questionText: questions[currentQuestion].questionText,
                                 choices: questions[currentQuestion].choices,
-                                userAnswer: questions[currentQuestion].userAnswer
+                                userAnswer: questions[currentQuestion].userAnswer,
+                                prevText: 'Previous',
+                                nextText: currentQuestion+1 < questions.length ? 'Next':'Submit',
+                                prevEnabled: currentQuestion > 0,
+                                nextEnabled: true
         };
         console.log(questionContext);
         //add question to the question display
@@ -125,17 +129,6 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
             }, true);
 
         });
-        /*
-        for (i = 0, l = choices.length; i < l; i++) {
-            choices.get(i).addEventListener('click', function() {
-                var clickedChoice = this.getAttribute('data-choice-num');
-                if (clickedChoice !== questions[currentQuestion].userAnswer) {
-                    $('.choice:eq('+i+")").attr('active');
-                }
-            }, true); //capture mode by setting true so button with handler is captured rather than any sub elements
-
-        }
-        */
     }
 
     this.beginQuiz = function() {
@@ -224,13 +217,22 @@ Handlebars.registerHelper('display-choices', function(choices, savedSelection, o
     return out + "</div>";
 });
 
+Handlebars.registerHelper('nav-buttons', function(prevText, nextText, prevIsEnabled, nextIsEnabled) {
+    'use strict';
+    //returns previous and next button markups, with disabled class if needed and given text
+    return "<button type='button' id='prev-button' class='btn nav-button" + (prevIsEnabled?'':' disabled') + "'>"+
+        prevText + "</button>" +
+        "<button type='button' id='next-button' class='btn nav-button" + (nextIsEnabled?'':' disabled') + "'>"+
+        nextText + "</button>";
+});
+
 $(document).ready( function() {
     'use strict';
     $('#templates').load('templates.html', function() {
 
-    var quiz1 = new Quiz(   [{questionText: "age",choices: ["22","23"],correctAnswer: 0},
-                            {questionText: "color",choices: ["red","blue"],correctAnswer: 0},
-                            {questionText: "animal",choices: ["dog","cat"],correctAnswer: 0}],
+    var quiz1 = new Quiz(   [{questionText: "What is your age?",choices: ["22","23"],correctAnswer: 0},
+                            {questionText: "What is your favorite color?",choices: ["Red","Blue"],correctAnswer: 0},
+                            {questionText: "What is your favorite animal?",choices: ["Dog","Cat"],correctAnswer: 0}],
                             'ageQuiz',
                             $('#sidebar-template').html(),
                             $('#question-template').html(),
