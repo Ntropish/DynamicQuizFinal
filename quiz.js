@@ -102,7 +102,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
                     currentQuestion = +this.getAttribute('data-num');
                     display();
                 }
-            }, true); //capture mode by setting true so div with handler is captured rather than any sub elements
+            }, true); //capture mode by setting true so button with handler is captured rather than any sub elements
         }
 
         //prepare the context for question display
@@ -113,6 +113,29 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         console.log(questionContext);
         //add question to the question display
         mainDisp.append(mainTemplate(questionContext));
+
+        //add handlers to choices
+        var choices = $('.choice');
+        choices.each(function( index ) {
+            this.addEventListener('click', function() {
+                if (questions[currentQuestion].userAnswer !== index) {
+                    questions[currentQuestion].userAnswer = index;
+                    display();
+                }
+            }, true);
+
+        });
+        /*
+        for (i = 0, l = choices.length; i < l; i++) {
+            choices.get(i).addEventListener('click', function() {
+                var clickedChoice = this.getAttribute('data-choice-num');
+                if (clickedChoice !== questions[currentQuestion].userAnswer) {
+                    $('.choice:eq('+i+")").attr('active');
+                }
+            }, true); //capture mode by setting true so button with handler is captured rather than any sub elements
+
+        }
+        */
     }
 
     this.beginQuiz = function() {
@@ -196,7 +219,7 @@ Handlebars.registerHelper('display-choices', function(choices, savedSelection, o
     var out = "<div id='choices' class='btn-group btn-group-vertical text-center'>";
     for (var i = 0, l = choices.length; i < l; i++) {
         var isActive = (i === savedSelection)?' active':'';//This will make the button 'active' if it's the saved choice
-        out = out + "<button type='radio' class='btn choice'"+isActive+" data-choice-num='"+ i +"'>" + choices[i] + "</button>";
+        out = out + "<button type='radio' class='btn choice"+isActive+"' data-choice-num='"+ i +"'>" + choices[i] + "</button>";
     }
     return out + "</div>";
 });
