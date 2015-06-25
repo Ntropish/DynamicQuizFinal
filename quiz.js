@@ -129,7 +129,7 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
 
         });
         $('#next-button').on('click', function() {
-            if (currentQuestion = questions.length - 1) {
+            if (currentQuestion === questions.length - 1) {
                 submit();
             }
             nextQuestion();
