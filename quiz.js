@@ -190,11 +190,15 @@ function User() {
     this.quizzes = [];
 
     function setName(name) {
-        username = name;
+        if (authenticated) {
+            username = name;
+        }
     }
 
     function setPin(n) {
-        PIN = n;
+        if (authenticated) {
+            PIN = n;
+        }
     }
 
     function getName() {
@@ -204,8 +208,58 @@ function User() {
     function authenticate(n) {
         if (n === PIN) {
             authenticated = true;
+            return true;
         }
+        return false;
     }
+}
+
+function findUserInUserList(name, userList) {
+    'use strict';
+    userList.forEach( function(user) {
+        if (user.getName() === name) {
+            return user;
+        }
+        return undefined;
+    });
+}
+
+function getUser(username, pin) {
+    'use strict';
+
+    //try to get userList
+    var userList = localStorage.getItem('userList');
+
+    //There are no users if it doesn't exist, so we can return now
+    if (!userList) {
+        return false;
+    }
+
+    //otherwise look for it and return it if the pin is right
+    var user = findUserInUserList(username, userList);
+    if (user && user.authenticate(pin)) {
+        return user;
+    }
+    return false;
+}
+
+function addUser(username, pin) {
+    'use strict';
+
+    //Get the userList from local storage and make it if it doesn't exist
+    var userList = localStorage.getItem('userList');
+    if (! userList) {
+        userList = [];
+    }
+    //if the user can't be found it is okay to make it
+    if (! findUserInUserList()) {
+        var newUser = new User();
+        newUser.setName(username);
+        newUser.setPin(pin);
+        userList.push(newUser);
+    }
+    localStorage.setItem('userList', userList);
+
 }
 
 Handlebars.registerHelper('display-index', function(num, current, answered, options) {
