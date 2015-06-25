@@ -43,3 +43,7 @@
 .quiz-index-link {
     width: 100%;
 }
+
+#questionText {
+    font-size: 33px;
+}

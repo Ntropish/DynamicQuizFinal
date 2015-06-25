@@ -106,8 +106,8 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
         }
 
         //prepare the context for question display
-        var questionContext = {question: questions[currentQuestion].questionText, choices: questions[currentQuestion].choices};
-
+        var questionContext = {questionText: questions[currentQuestion].questionText, choices: questions[currentQuestion].choices};
+        console.log(questionContext);
         //add question to the question display
         mainDisp.append(mainTemplate(questionContext));
     }
