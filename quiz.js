@@ -102,11 +102,11 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     };
 
     this.getScore = function() {
-        //todo
+        return score;
     };
 
     this.getFinalized = function() {
-        //todo
+        return finalized;
     };
 
 }
