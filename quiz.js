@@ -69,7 +69,12 @@ function Quiz(questions, quizName, sideTempElt, mainTempElt, sideDisp, mainDisp)
     }
 
     function questionStates() {
-        //todo
+        //returns an array of booleans that are true if question at that index is answered
+        var out = [];
+        questions.forEach(function(question) {
+            out.push(question.isAnswered());
+        });
+        return out;
     }
 
     function display() {
