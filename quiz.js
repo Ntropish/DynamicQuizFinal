@@ -237,10 +237,10 @@ Handlebars.registerHelper('nav-buttons', function(prevText, nextText, prevIsEnab
 $(document).ready( function() {
     'use strict';
     $('#templates').load('templates.html', function() {
-
-    var quiz1 = new Quiz(   [{questionText: "What is your age?",choices: ["22","23"],correctAnswer: 0},
-                            {questionText: "What is your favorite color?",choices: ["Red","Blue"],correctAnswer: 0},
-                            {questionText: "What is your favorite animal?",choices: ["Dog","Cat"],correctAnswer: 0}],
+    var questions = [   new Question("What is your age?", ["22","23"], 0),
+                        new Question("What is your favorite color?", ["Red","Blue"], 0),
+                        new Question("What is your favorite animal?", ["Dog","Cat"], 0)];
+    var quiz1 = new Quiz(   questions,
                             'ageQuiz',
                             $('#sidebar-template').html(),
                             $('#question-template').html(),
